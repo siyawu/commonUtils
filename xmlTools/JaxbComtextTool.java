@@ -64,7 +64,9 @@ public class JaxbComtextTool
         return (T) u.unmarshal(sax);
     }
 
-    /** 序列化参数到XML文件
+    /**
+     * 序列化参数到XML文件
+     *
      * @param context
      * @param filePath
      * @param <T>
@@ -95,7 +97,9 @@ public class JaxbComtextTool
         return true;
     }
 
-    /**反序列化
+    /**
+     * 反序列化
+     *
      * @param obj
      * @param filePath
      * @param <T>
@@ -119,7 +123,9 @@ public class JaxbComtextTool
         return null;
     }
 
-    /**反序列化
+    /**
+     * 反序列化
+     *
      * @param obj
      * @param filePath
      * @return
