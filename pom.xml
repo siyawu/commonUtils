@@ -6,8 +6,7 @@
     <version>1.0</version>
     <packaging>jar</packaging>
 
-    <name>commonUtils Maven Webapp</name>
-    <!--<url>http://www.zhangshuzheng.cn</url>-->
+    <name>commonUtils</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -15,6 +14,41 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.15</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpcore</artifactId>
+            <version>4.4.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.6</version>
+        </dependency>
+
+        <!-- 将远程url页面转换到本地的pdf文件-->
+        <dependency>
+            <groupId>org.xhtmlrenderer</groupId>
+            <artifactId>flying-saucer-pdf</artifactId>
+            <version>9.1.6</version>
+        </dependency>
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itextpdf</artifactId>
+            <version>5.5.7</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.simpleframework/simple-xml -->
+        <dependency>
+            <groupId>org.simpleframework</groupId>
+            <artifactId>simple-xml</artifactId>
+            <version>2.7.1</version>
+        </dependency>
+
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
@@ -25,7 +59,13 @@
             <artifactId>servlet-api</artifactId>
             <version>2.5</version>
         </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13</version>
+        </dependency>
     </dependencies>
+
     <build>
         <finalName>commonUtils</finalName>
         <!--<filters>-->
@@ -45,6 +85,14 @@
                 <configuration>
                     <skipTests>true</skipTests>
                     <testFailureIgnore>true</testFailureIgnore>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
                 </configuration>
             </plugin>
         </plugins>

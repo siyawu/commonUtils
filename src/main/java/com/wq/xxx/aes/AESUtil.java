@@ -1,4 +1,4 @@
-package com.wq.common;
+package com.wq.xxx.aes;
 
 import org.junit.Test;
 import sun.misc.BASE64Decoder;
@@ -13,10 +13,9 @@ import java.security.SecureRandom;
 /**
  * Created by wuqiang on 2018/4/22
  */
-public class AESUtil
-{
+public class AESUtil {
     private static final String ENCODE_RULES = "Keys123";
-
+    
     /**
      * 加密
      * 1.构造密钥生成器
@@ -26,10 +25,8 @@ public class AESUtil
      * 5.内容加密
      * 6.返回字符串
      */
-    public static String aesEncode(String content)
-    {
-        try
-        {
+    public static String aesEncode(String content) {
+        try {
             //1.构造密钥生成器，指定为AES算法,不区分大小写
             KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
             //2.根据ecnodeRules规则初始化密钥生成器
@@ -57,24 +54,20 @@ public class AESUtil
             String aesEncode = new String(new BASE64Encoder().encode(byteAES));
             //11.将字符串返回
             return aesEncode;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
-
+    
     /**
      * 解密
      * 1.同加密1-4步
      * 2.将加密后的字符串反纺成byte[]数组
      * 3.将加密内容解密
      */
-    public static String aesDecode(String content)
-    {
-        try
-        {
+    public static String aesDecode(String content) {
+        try {
             //1.构造密钥生成器，指定为AES算法,不区分大小写
             KeyGenerator keygen = KeyGenerator.getInstance("AES");
             //2.根据ecnodeRules规则初始化密钥生成器
@@ -100,22 +93,19 @@ public class AESUtil
             byte[] byteDecode = cipher.doFinal(byteContent);
             String aesDecode = new String(byteDecode, "utf-8");
             return aesDecode;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
+        
         return null;
     }
-
+    
     @Test
-    public void run()
-    {
+    public void run() {
         String srcBuff = "hello kitty.";
         String strEndcode = aesEncode(srcBuff);
         System.out.println("加密是：" + strEndcode);
-
+        
         String tarBuff = aesDecode(strEndcode);
         System.out.println("解密后：" + tarBuff);
     }
