@@ -1,11 +1,13 @@
 package com.wq.xxx;
 
 import com.itextpdf.text.pdf.BaseFont;
+import com.wq.xxx.utils.io.PathUtil;
 import org.xhtmlrenderer.pdf.ITextFontResolver;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.util.UUID;
 
 /*
  *Author：wuqiang
@@ -28,25 +30,26 @@ public class Html2Pdf {
             outPath = LINUX_OS_OUT_PUT_PATH;
             fontsPath = LINUX_OS_FONTS_PATH;
         }
-        
-        urlToPdf("http://www.lrfun.com/toPdf.html", "20210105098888888.pdf", outPath, fontsPath);
+    
+        String outFilePath = PathUtil.combine(outPath, "202101", UUID.randomUUID().toString() + ".pdf");
+
+//        urlToPdf("https://www.baidu.com/?tn=78040160_5_pg&ch=8&qq-pf-to=pcqq.temporaryc2c", outFilePath, fontsPath);
+        urlToPdf("http://localhost:8855/higgs/demo.html", outFilePath, fontsPath);
     }
     
     /**
      * sdsfdgdsg
      *
      * @param url            链接地址
-     * @param outputFileName 转存的PDF文件名
+     * @param outPutFilePath 转存的PDF文件名
      */
-    public static void urlToPdf(String url, String outputFileName, String outPutFilePath, String fontsPath) {
+    public static void urlToPdf(String url, String outPutFilePath, String fontsPath) {
         try {
-            String folder = outputFileName.substring(0, 6);
-            String outputFile = outPutFilePath + folder + "/" + outputFileName;
-            java.io.File targetFile = new java.io.File(outputFile);
+            java.io.File targetFile = new java.io.File(outPutFilePath);
             if (!targetFile.getParentFile().exists()) {
                 targetFile.getParentFile().mkdirs();
             }
-            OutputStream os = new FileOutputStream(outputFile);
+            OutputStream os = new FileOutputStream(outPutFilePath);
             ITextRenderer renderer = new ITextRenderer();
             renderer.setDocument(url);
             ITextFontResolver fontResolver = renderer.getFontResolver();
@@ -54,6 +57,8 @@ public class Html2Pdf {
             fontResolver.addFont(fontsPath, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED); //windows
             renderer.layout();
             renderer.createPDF(os);
+            renderer.finishPDF();
+            os.flush();
             os.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -61,8 +66,8 @@ public class Html2Pdf {
     }
     
     private static boolean isLinuxOs() {
-        String osName = System.getProperties().getProperty("os.name");
+        String osName = System.getProperties().getProperty("os.name").toLowerCase();
         System.out.println(osName);
-        return "Linux".equals(osName);
+        return "linux".equals(osName);
     }
 }

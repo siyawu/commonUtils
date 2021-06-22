@@ -1,6 +1,6 @@
 package com.wq.xxx.xmlTools;
 
-import com.wq.xxx.utils.FileUtils;
+import com.wq.xxx.utils.io.FileUtil;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 
@@ -27,13 +27,13 @@ public class JaxbComtextTool {
         mar.marshal(ob, sw);
         return sw.toString();
     }
-    
+
     private static SAXParserFactory getSAXParserFactory() {
         SAXParserFactory factory = SAXParserFactory.newInstance();
         //        factory.setFeature("http://xml.org/sax/features/")
         return factory;
     }
-    
+
     private static SAXSource getSaxSource(InputSource in) throws Exception {
         SAXParserFactory factory = getSAXParserFactory();
         factory.setNamespaceAware(true);
@@ -42,7 +42,7 @@ public class JaxbComtextTool {
         xmlread.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
         return new SAXSource(xmlread, in);
     }
-    
+
     private static <T> T readConfig(Class<?> obj, InputStream insp) throws Exception {
         JAXBContext e = JAXBContext.newInstance(obj);
         Unmarshaller u = e.createUnmarshaller();
@@ -50,7 +50,7 @@ public class JaxbComtextTool {
         SAXSource sax = getSaxSource(insour);
         return (T) u.unmarshal(sax);
     }
-    
+
     /**
      * 序列化参数到XML文件
      *
@@ -72,11 +72,11 @@ public class JaxbComtextTool {
         } catch (Exception e) {
             return false;
         } finally {
-            FileUtils.closeStream(outputStream);
+            FileUtil.close(outputStream);
         }
         return true;
     }
-    
+
     /**
      * 反序列化
      *
@@ -87,7 +87,7 @@ public class JaxbComtextTool {
      */
     public static <T> Object desrializeXmlToParme(final Class<?> obj, String filePath) {
         try {
-            String xml = FileUtils.openFileToString(filePath);
+            String xml = FileUtil.openFileToString(filePath);
             JAXBContext jc = JAXBContext.newInstance(obj);
             Unmarshaller unmar = jc.createUnmarshaller();
             return unmar.unmarshal(new StringReader(xml));
@@ -95,7 +95,7 @@ public class JaxbComtextTool {
         }
         return null;
     }
-    
+
     /**
      * 反序列化
      *
@@ -110,7 +110,7 @@ public class JaxbComtextTool {
             return readConfig(obj, dataInputStream);
         } catch (Exception ignored) {
         } finally {
-            FileUtils.closeStream(dataInputStream);
+            FileUtil.close(dataInputStream);
         }
         return null;
     }
